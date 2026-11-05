@@ -1,13 +1,14 @@
+HTML
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Squeekverse: Cuộc Đua Bánh Xe Siêu Tốc</title>
+    <title>SqueekStudio - Xưởng Thiết Kế & Đúc NFT Hamster Động</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0f172a, #1e1b4b);
+            background: linear-gradient(135deg, #090d16, #1e1b4b);
             color: #f8fafc;
             display: flex;
             flex-direction: column;
@@ -15,20 +16,19 @@
             justify-content: center;
             min-height: 100vh;
             margin: 0;
-            overflow: hidden;
         }
-        .game-container {
-            background: rgba(30, 41, 59, 0.9);
-            border: 2px solid #3b82f6;
+        .studio-container {
+            background: rgba(30, 41, 59, 0.85);
+            border: 2px solid #6366f1;
             border-radius: 24px;
-            padding: 30px;
+            padding: 25px;
             text-align: center;
-            width: 380px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.7);
-            backdrop-filter: blur(10px);
+            width: 400px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+            backdrop-filter: blur(12px);
         }
         .badge {
-            background: #2563eb;
+            background: #6366f1;
             color: white;
             font-size: 11px;
             padding: 5px 12px;
@@ -39,153 +39,119 @@
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-        .hamster-stage {
+        .preview-box {
             background: #0f172a;
             border-radius: 16px;
-            padding: 25px;
+            padding: 20px;
             margin-bottom: 20px;
             border: 1px solid #475569;
             position: relative;
         }
         .avatar {
-            font-size: 90px;
-            transition: transform 0.2s ease;
+            font-size: 80px;
+            transition: all 0.3s ease;
         }
-        .running-fast {
-            animation: superRun 0.2s infinite alternate;
-        }
-        @keyframes superRun {
-            0% { transform: scale(1) rotate(-5px); }
-            100% { transform: scale(1.1) rotate(5px); }
-        }
-        .status-text {
-            font-size: 15px;
-            font-weight: bold;
-            margin: 12px 0;
-            padding: 6px;
-            border-radius: 8px;
-        }
-        .status-active { background: #ea580c; color: #fff; }
-        .status-rest { background: #4f46e5; color: #fff; }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 20px;
-            text-align: left;
-        }
-        .stat-box {
-            background: #0f172a;
-            padding: 10px;
-            border-radius: 10px;
-            border: 1px solid #334155;
-            font-size: 12px;
-        }
-        .stat-box span {
-            display: block;
-            font-size: 14px;
-            font-weight: bold;
+        .trait-display {
+            font-size: 13px;
             color: #38bdf8;
-            margin-top: 4px;
-        }
-        .btn-boost {
-            background: linear-gradient(135deg, #f59e0b, #ea580c);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 12px;
-            font-size: 15px;
+            margin-top: 10px;
             font-weight: bold;
-            cursor: pointer;
-            width: 100%;
-            transition: transform 0.1s, opacity 0.2s;
-            box-shadow: 0 4px 12px rgba(234, 88, 12, 0.4);
         }
-        .btn-boost:active { transform: scale(0.96); }
-        .btn-boost:hover { opacity: 0.9; }
+        .customizer-section {
+            text-align: left;
+            background: #0f172a;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #334155;
+        }
+        .customizer-section label {
+            font-size: 12px;
+            color: #94a3b8;
+            display: block;
+            margin-bottom: 6px;
+        }
+        select, button {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #475569;
+            background: #1e293b;
+            color: white;
+            font-size: 14px;
+            margin-bottom: 12px;
+            cursor: pointer;
+        }
+        select:focus { outline: none; border-color: #6366f1; }
+        .btn-mint {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            font-weight: bold;
+            border: none;
+            transition: opacity 0.2s, transform 0.1s;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+        }
+        .btn-mint:active { transform: scale(0.97); }
+        .btn-mint:hover { opacity: 0.9; }
+        .success-msg {
+            color: #34d399;
+            font-size: 13px;
+            font-weight: bold;
+            margin-top: 10px;
+            display: none;
+        }
     </style>
 </head>
 <body>
 
-    <div class="game-container">
-        <div class="badge">Squeekchain Genesis Game</div>
-        <h2>Squeekverse Arena</h2>
+    <div class="studio-container">
+        <div class="badge">Squeekchain Dynamic NFT Studio</div>
+        <h2>Xưởng Chế Tạo Hamster NFT</h2>
         
-        <div class="hamster-stage">
-            <div id="hamster-avatar" class="avatar">🐹</div>
-            <div id="status-badge" class="status-text status-active">🔥 Đang sẵn sàng đua!</div>
+        <div class="preview-box">
+            <div id="nft-avatar" class="avatar">🐹</div>
+            <div id="trait-summary" class="trait-display">Thuộc tính: Thường | Giáp: Cơ bản</div>
         </div>
 
-        <div class="stats-grid">
-            <div class="stat-box">
-                ⚡ Vận tốc Vành:
-                <span id="rpm">340</span> RPM
-            </div>
-            <div class="stat-box">
-                📏 Quãng đường:
-                <span id="distance">18.42</span> km
-            </div>
-            <div class="stat-box">
-                🏆 Điểm Thưởng:
-                <span id="score">100</span> EXP
-            </div>
-            <div class="stat-box">
-                🔋 Năng lượng:
-                <span id="energy">100%</span>
-            </div>
+        <div class="customizer-section">
+            <label>1. Chọn Phụ Kiện / Trang Phục (Traits):</label>
+            <select id="outfit-select" onchange="updatePreview()">
+                <option value="🐹">Bình thường (Không phụ kiện)</option>
+                <option value="🐹🕶️">Kính ngầu Cyberpunk</option>
+                <option value="🐹👑">Vương miện Hoàng Gia</option>
+                <option value="🐹⚡">Áo giáp Sấm Sét Tốc Độ</option>
+            </select>
+
+            <label>2. Chọn Hiệu Ứng Năng Lượng Động:</label>
+            <select id="aura-select" onchange="updatePreview()">
+                <option value="Ổn định">Aura Xanh (Ổn định)</option>
+                <option value="Bùng nổ 🔥">Aura Lửa (Bùng nổ)</option>
+                <option value="Huyền ảo 🌌">Aura Vũ Trụ (Huyền ảo)</option>
+            </select>
         </div>
 
-        <button class="btn-boost" onclick="boostHamster()">⚡ KÍCH HOẠT TĂNG TỐC (BOOST)</button>
+        <button class="btn-mint" onclick="mintDynamicNFT()">🎨 ĐÚC NFT ĐỘNG LÊN CHUỖI (MINT)</button>
+        <div id="success-notice" class="success-msg">✨ Đã tạo bản ghi Dynamic NFT thành công trên Sepolia!</div>
     </div>
 
     <script>
-        let score = 100;
-        let rpm = 340;
-        let isBoosting = false;
-
-        async function fetchLiveStatus() {
-            try {
-                // Gọi API công khai của hệ thống để lấy dữ liệu thời gian thực
-                const response = await fetch('https://api.squeekchain.com/v1/status');
-                const data = await response.json();
-                
-                if(!isBoosting) {
-                    rpm = data.rpm || Math.floor(Math.random() * 200) + 250;
-                    document.getElementById('rpm').innerText = rpm;
-                }
-            } catch (error) {
-                console.log("Sử dụng chế độ mô phỏng trực tiếp tương tác game.");
-            }
+        function updatePreview() {
+            const outfit = document.getElementById('outfit-select').value;
+            const aura = document.getElementById('aura-select').value;
+            
+            document.getElementById('nft-avatar').innerText = outfit;
+            document.getElementById('trait-summary').innerText = `Thuộc tính động: ${outfit.substring(1) || 'Cơ bản'} | Hiệu ứng: ${aura}`;
         }
 
-        function boostHamster() {
-            isBoosting = true;
-            rpm += 150;
-            score += 25;
+        function mintDynamicNFT() {
+            const notice = document.getElementById('success-notice');
+            notice.style.display = "block";
             
-            const avatar = document.getElementById('hamster-avatar');
-            const badge = document.getElementById('status-badge');
-            
-            avatar.innerText = "🐹🚀";
-            avatar.className = "avatar running-fast";
-            badge.innerText = "🚀 TĂNG TỐC CỰC ĐẠI (+25 EXP)";
-            badge.className = "status-text status-active";
-
-            document.getElementById('rpm').innerText = rpm;
-            document.getElementById('score').innerText = score;
-
-            // Trở về trạng thái bình thường sau 2 giây
+            // Hiệu ứng thông báo thành công
             setTimeout(() => {
-                isBoosting = false;
-                avatar.innerText = "🐹⚡";
-                avatar.className = "avatar";
-                badge.innerText = "🔥 Đang chạy ổn định trên bánh xe";
-            }, 2000);
+                notice.style.display = "none";
+            }, 4000);
         }
-
-        // Cập nhật định kỳ từ chuỗi
-        setInterval(fetchLiveStatus, 10000);
     </script>
 </body>
 </html>
