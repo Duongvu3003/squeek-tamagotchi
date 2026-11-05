@@ -4,154 +4,227 @@ HTML
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SqueekStudio - Xưởng Thiết Kế & Đúc NFT Hamster Động</title>
+    <title>Squeek Dungeon: Exsqueektion Style</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #090d16, #1e1b4b);
-            color: #f8fafc;
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #0d060f;
+            color: #f3f4f6;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
             margin: 0;
+            overflow: hidden;
         }
-        .studio-container {
-            background: rgba(30, 41, 59, 0.85);
-            border: 2px solid #6366f1;
-            border-radius: 24px;
-            padding: 25px;
-            text-align: center;
-            width: 400px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
-            backdrop-filter: blur(12px);
-        }
-        .badge {
-            background: #6366f1;
-            color: white;
-            font-size: 11px;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-weight: bold;
-            display: inline-block;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .preview-box {
-            background: #0f172a;
+        .game-wrapper {
+            background: linear-gradient(135deg, #180a1a, #2e1030);
+            border: 3px solid #db2777;
             border-radius: 16px;
             padding: 20px;
-            margin-bottom: 20px;
-            border: 1px solid #475569;
+            text-align: center;
+            width: 440px;
+            box-shadow: 0 10px 30px rgba(219, 39, 119, 0.4);
+        }
+        h1 {
+            font-size: 20px;
+            color: #f472b6;
+            margin: 5px 0 15px 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .canvas-container {
             position: relative;
+            background: #09030a;
+            border: 2px solid #831843;
+            border-radius: 8px;
+            overflow: hidden;
+            width: 400px;
+            height: 250px;
+            margin: 0 auto 15px auto;
         }
-        .avatar {
-            font-size: 80px;
-            transition: all 0.3s ease;
-        }
-        .trait-display {
-            font-size: 13px;
-            color: #38bdf8;
-            margin-top: 10px;
-            font-weight: bold;
-        }
-        .customizer-section {
-            text-align: left;
-            background: #0f172a;
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            border: 1px solid #334155;
-        }
-        .customizer-section label {
-            font-size: 12px;
-            color: #94a3b8;
+        canvas {
             display: block;
-            margin-bottom: 6px;
         }
-        select, button {
-            width: 100%;
+        .hud {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            font-size: 13px;
+            background: #20081c;
             padding: 10px;
             border-radius: 8px;
-            border: 1px solid #475569;
-            background: #1e293b;
-            color: white;
-            font-size: 14px;
+            border: 1px solid #701a75;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        .hud span {
+            color: #f472b6;
+            font-weight: bold;
+        }
+        .controls-hint {
+            font-size: 11px;
+            color: #a855f7;
             margin-bottom: 12px;
-            cursor: pointer;
         }
-        select:focus { outline: none; border-color: #6366f1; }
-        .btn-mint {
-            background: linear-gradient(135deg, #10b981, #059669);
+        .btn-action {
+            background: #db2777;
             color: white;
-            font-weight: bold;
             border: none;
-            transition: opacity 0.2s, transform 0.1s;
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
-        }
-        .btn-mint:active { transform: scale(0.97); }
-        .btn-mint:hover { opacity: 0.9; }
-        .success-msg {
-            color: #34d399;
-            font-size: 13px;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 14px;
             font-weight: bold;
-            margin-top: 10px;
-            display: none;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.2s;
+            text-transform: uppercase;
         }
+        .btn-action:hover { background: #be185d; }
     </style>
 </head>
 <body>
 
-    <div class="studio-container">
-        <div class="badge">Squeekchain Dynamic NFT Studio</div>
-        <h2>Xưởng Chế Tạo Hamster NFT</h2>
+    <div class="game-wrapper">
+        <h1>Squeek Dungeon 🗡️</h1>
         
-        <div class="preview-box">
-            <div id="nft-avatar" class="avatar">🐹</div>
-            <div id="trait-summary" class="trait-display">Thuộc tính: Thường | Giáp: Cơ bản</div>
+        <div class="canvas-container">
+            <canvas id="gameCanvas" width="400" height="250"></canvas>
         </div>
 
-        <div class="customizer-section">
-            <label>1. Chọn Phụ Kiện / Trang Phục (Traits):</label>
-            <select id="outfit-select" onchange="updatePreview()">
-                <option value="🐹">Bình thường (Không phụ kiện)</option>
-                <option value="🐹🕶️">Kính ngầu Cyberpunk</option>
-                <option value="🐹👑">Vương miện Hoàng Gia</option>
-                <option value="🐹⚡">Áo giáp Sấm Sét Tốc Độ</option>
-            </select>
-
-            <label>2. Chọn Hiệu Ứng Năng Lượng Động:</label>
-            <select id="aura-select" onchange="updatePreview()">
-                <option value="Ổn định">Aura Xanh (Ổn định)</option>
-                <option value="Bùng nổ 🔥">Aura Lửa (Bùng nổ)</option>
-                <option value="Huyền ảo 🌌">Aura Vũ Trụ (Huyền ảo)</option>
-            </select>
+        <div class="hud">
+            <div>❤️ HP: <span id="hp">100</span></div>
+            <div>💎 Kho báu: <span id="score">0</span></div>
+            <div>⚡ Trạng thái: <span id="status">Sẵn sàng</span></div>
+            <div>🏃 Tốc độ: <span id="rpm">320 RPM</span></div>
         </div>
 
-        <button class="btn-mint" onclick="mintDynamicNFT()">🎨 ĐÚC NFT ĐỘNG LÊN CHUỖI (MINT)</button>
-        <div id="success-notice" class="success-msg">✨ Đã tạo bản ghi Dynamic NFT thành công trên Sepolia!</div>
+        <div class="controls-hint">Dùng phím mũi tên hoặc WASD để né kẻ địch trong hầm ngục!</div>
+        
+        <button class="btn-action" onclick="restartGame()">Chơi Lại / Hồi Sinh</button>
     </div>
 
     <script>
-        function updatePreview() {
-            const outfit = document.getElementById('outfit-select').value;
-            const aura = document.getElementById('aura-select').value;
-            
-            document.getElementById('nft-avatar').innerText = outfit;
-            document.getElementById('trait-summary').innerText = `Thuộc tính động: ${outfit.substring(1) || 'Cơ bản'} | Hiệu ứng: ${aura}`;
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let hamster = { x: 50, y: 110, size: 24, speed: 4, hp: 100 };
+        let enemies = [
+            { x: 300, y: 50, vx: -2, vy: 1, size: 20 },
+            { x: 350, y: 180, vx: -1.5, vy: -1.5, size: 20 }
+        ];
+        let gems = [
+            { x: 200, y: 100, collected: false },
+            { x: 320, y: 120, collected: false }
+        ];
+        let score = 0;
+        let isGameOver = false;
+
+        let keys = {};
+        window.addEventListener('keydown', e => keys[e.key] = true);
+        window.addEventListener('keyup', e => keys[e.key] = false);
+
+        function update() {
+            if (isGameOver) return;
+
+            // Di chuyển nhân vật
+            if ((keys['ArrowUp'] || keys['w']) && hamster.y > 10) hamster.y -= hamster.speed;
+            if ((keys['ArrowDown'] || keys['s']) && hamster.y < canvas.height - 10) hamster.y += hamster.speed;
+            if ((keys['ArrowLeft'] || keys['a']) && hamster.x > 10) hamster.x -= hamster.speed;
+            if ((keys['ArrowRight'] || keys['d']) && hamster.x < canvas.width - 10) hamster.x += hamster.speed;
+
+            // Cập nhật kẻ địch
+            enemies.forEach(en => {
+                en.x += en.vx;
+                en.y += en.vy;
+                if (en.x <= 10 || en.x >= canvas.width - 10) en.vx *= -1;
+                if (en.y <= 10 || en.y >= canvas.height - 10) en.vy *= -1;
+
+                // Va chạm
+                let dist = Math.hypot(hamster.x - en.x, hamster.y - en.y);
+                if (dist < hamster.size / 2 + en.size / 2) {
+                    hamster.hp -= 1;
+                    document.getElementById('hp').innerText = hamster.hp;
+                    if (hamster.hp <= 0) {
+                        isGameOver = true;
+                        document.getElementById('status').innerText = "Đã gục ngã!";
+                    }
+                }
+            });
+
+            // Nhặt kho báu
+            gems.forEach(gem => {
+                if (!gem.collected) {
+                    let dist = Math.hypot(hamster.x - gem.x, hamster.y - gem.y);
+                    if (dist < 20) {
+                        gem.collected = true;
+                        score += 50;
+                        document.getElementById('score').innerText = score;
+                        // Hồi sinh ngọc mới
+                        setTimeout(() => {
+                            gem.x = Math.random() * 300 + 50;
+                            gem.y = Math.random() * 200 + 25;
+                            gem.collected = false;
+                        }, 3000);
+                    }
+                }
+            });
         }
 
-        function mintDynamicNFT() {
-            const notice = document.getElementById('success-notice');
-            notice.style.display = "block";
-            
-            // Hiệu ứng thông báo thành công
-            setTimeout(() => {
-                notice.style.display = "none";
-            }, 4000);
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Vẽ đường đi hầm ngục
+            ctx.strokeStyle = '#3b0764';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(5, 5, canvas.width - 10, canvas.height - 10);
+
+            // Vẽ ngọc / kho báu
+            gems.forEach(gem => {
+                if (!gem.collected) {
+                    ctx.fillStyle = '#ec4899';
+                    ctx.beginPath();
+                    ctx.arc(gem.x, gem.y, 6, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            });
+
+            // Vẽ kẻ địch (quái vật trong vườn máu)
+            enemies.forEach(en => {
+                ctx.fillStyle = '#ef4444';
+                ctx.fillRect(en.x - en.size/2, en.y - en.size/2, en.size, en.size);
+            });
+
+            // Vẽ chuột hamster
+            ctx.fillStyle = '#fbbf24';
+            ctx.beginPath();
+            ctx.arc(hamster.x, hamster.y, hamster.size/2, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Mắt chuột
+            ctx.fillStyle = '#000';
+            ctx.fillRect(hamster.x + 3, hamster.y - 4, 3, 3);
         }
+
+        function loop() {
+            update();
+            draw();
+            requestAnimationFrame(loop);
+        }
+
+        function restartGame() {
+            hamster.hp = 100;
+            hamster.x = 50;
+            hamster.y = 110;
+            score = 0;
+            isGameOver = false;
+            document.getElementById('hp').innerText = 100;
+            document.getElementById('score').innerText = 0;
+            document.getElementById('status').innerText = "Đang phiêu lưu";
+        }
+
+        loop();
     </script>
 </body>
 </html>
